@@ -1,0 +1,21 @@
+{
+  "name": "pretty-purple",
+  "displayName": "pretty-purple",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Pretty Purple",
+        "uiTheme": "vs-dark",
+        "path": "./themes/Pretty Purple-color-theme.json"
+      }
+    ]
+  }
+}
