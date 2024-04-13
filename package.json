@@ -9,6 +9,9 @@
   "categories": [
     "Themes"
   ],
+  "repository": {
+    "url": "https://github.com/mepowerleo10/pretty-purple-vscode"
+  },
   "contributes": {
     "themes": [
       {
