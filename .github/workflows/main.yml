@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.package }}
-          path: ${{ env.package }}
+          path: pretty-purple-vscode/${{ env.package }}
