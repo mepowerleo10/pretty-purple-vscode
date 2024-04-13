@@ -22,7 +22,7 @@ jobs:
         run: npm install -g @vscode/vsce
         
       - name: Set Version Variable
-        run: echo "version=$(0.0.1)" >> $GITHUB_ENV
+        run: echo "version=0.0.1" >> $GITHUB_ENV
 
       - name: Set Package Name Variable
         run: echo "package=pretty-purple-$version.vsix" >> $GITHUB_ENV
