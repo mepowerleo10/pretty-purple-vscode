@@ -19,7 +19,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies
-        run: npm install @vscode/vsce
+        run: npm install -g @vscode/vsce
         
       - name: Set Version Variable
         run: echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
