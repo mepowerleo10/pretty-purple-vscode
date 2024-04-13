@@ -24,6 +24,9 @@ jobs:
       - name: Set Version Variable
         run: echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+      - name: Set Package Name Variable
+        run: echo "package=pretty-purple-$version" >> $GITHUB_ENV
+
       - name: Build Extension
         run: vsce package --no-update-package-json $version
 
@@ -31,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: vscode-extension
-          path: pretty-purple-$version
+          path: $package
