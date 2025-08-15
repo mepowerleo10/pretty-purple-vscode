@@ -20,33 +20,28 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Dependencies
+      - name: Install vsce
         run: npm install -g @vscode/vsce
 
-      - name: Create a tag from current commit
-        run: |
-          TAG_NAME=pretty-purple-$(date +%Y%m%d-%H_%M_%S)
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
-  
-
-      - name: Set Package Name Variable
-        run: echo "package=$TAG_NAME.vsix" >> $GITHUB_ENV
+      - name: Set Tag Name
+        run: echo "TAG_NAME=pretty-purple-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
 
       - name: Build Extension
-        run: vsce package --no-update-package-json $version
+        run: |
+          vsce package --no-update-package-json
+          VSIX_FILE=$(ls *.vsix)
+          echo "PACKAGE_FILE=$VSIX_FILE" >> $GITHUB_ENV
 
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.package }}
-          path: ${{ env.package }}
+          name: vscode-extension
+          path: ${{ env.PACKAGE_FILE }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME }}
-          files: ./*.vsix
+          files: ${{ env.PACKAGE_FILE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
