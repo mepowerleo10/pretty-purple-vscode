@@ -22,12 +22,17 @@ jobs:
 
       - name: Install Dependencies
         run: npm install -g @vscode/vsce
-        
-      - name: Set Version Variable
-        run: echo "version=0.0.1" >> $GITHUB_ENV
+
+      - name: Create a tag from current commit
+        run: |
+          TAG_NAME=pretty-purple-$(date +%Y%m%d-%H_%M_%S)
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+  
 
       - name: Set Package Name Variable
-        run: echo "package=pretty-purple-$version.vsix" >> $GITHUB_ENV
+        run: echo "package=$TAG_NAME.vsix" >> $GITHUB_ENV
 
       - name: Build Extension
         run: vsce package --no-update-package-json $version
@@ -37,13 +42,6 @@ jobs:
         with:
           name: ${{ env.package }}
           path: ${{ env.package }}
-
-      - name: Create a tag from current commit
-        run: |
-          TAG_NAME=build-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
