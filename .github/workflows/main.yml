@@ -36,9 +36,17 @@ jobs:
           name: ${{ env.package }}
           path: ${{ env.package }}
 
+      - name: Create a tag from current commit
+        run: |
+          TAG_NAME=build-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG_NAME }}
           files: ./*.vsix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
